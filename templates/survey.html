@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>{{ survey.title }}</h1>
+            <p>{{ survey.description }}</p>
+        </header>
+
+        <form method="POST">
+            <label for="answer">Tu respuesta</label>
+            <input type="text" id="answer" name="answer" required>
+            <button type="submit">Enviar Respuesta</button>
+        </form>
+
+        <footer>
+            <a href="/" class="btn-home">Volver a la Página Principal</a>
+        </footer>
+    </div>
+</body>
+</html>

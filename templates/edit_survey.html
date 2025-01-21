@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Encuesta</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style2.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Editar Encuesta: {{ survey.title }}</h1>
+        </header>
+
+        <form action="/edit/{{ survey.id }}" method="POST">
+            <label for="title">Título de la Encuesta</label>
+            <input type="text" id="title" name="title" value="{{ survey.title }}" required>
+
+            <label for="description">Descripción</label>
+            <textarea id="description" name="description">{{ survey.description }}</textarea>
+
+            <button type="submit">Actualizar Encuesta</button>
+        </form>
+
+        <footer>
+            <a href="/" class="btn-home">Volver a la Página Principal</a>
+        </footer>
+    </div>
+</body>
+</html>

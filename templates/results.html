@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de la Encuesta</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Resultados de la Encuesta: {{ survey.title }}</h1>
+            <p>{{ survey.description }}</p>
+        </header>
+
+        <ul>
+            {% for response in responses %}
+            <li>{{ response.answer }}</li>
+            {% endfor %}
+        </ul>
+
+        <footer>
+            <a href="/" class="btn-home">Volver a la Página Principal</a>
+        </footer>
+    </div>
+</body>
+</html>

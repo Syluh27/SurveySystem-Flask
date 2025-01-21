@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuestas</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Encuestas Disponibles</h1>
+        </header>
+        <section class="survey-list">
+            {% for survey in surveys %}
+            <div class="survey-item">
+                <h2>{{ survey.title }}</h2>
+                <p>{{ survey.description }}</p>
+
+                <!-- Enlace para ver resultados -->
+                <a href="{{ url_for('results', survey_id=survey.id) }}" class="btn-view">Ver Resultados</a>
+
+                <!-- Enlace para editar -->
+                <a href="/edit/{{ survey.id }}" class="btn-edit">Editar</a>
+
+                <!-- Formulario para eliminar -->
+                <form action="/delete/{{ survey.id }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn-delete">Eliminar</button>
+                </form>
+            </div>
+            {% else %}
+            <p>No hay encuestas disponibles.</p>
+            {% endfor %}
+        </section>
+
+        <footer>
+            <a href="/create" class="btn-create">Crear Nueva Encuesta</a>
+        </footer>
+    </div>
+</body>
+</html>
