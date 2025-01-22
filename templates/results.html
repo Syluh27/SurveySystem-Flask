@@ -5,19 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados de la Encuesta</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Resultados de la Encuesta: {{ survey.title }}</h1>
+            <h1>Resultados de la Encuesta</h1>
+            <h2>{{ survey.title }}</h2>
             <p>{{ survey.description }}</p>
         </header>
 
-        <ul>
-            {% for response in responses %}
-            <li>{{ response.answer }}</li>
-            {% endfor %}
-        </ul>
+        <section>
+            <h3>Respuestas Recopiladas</h3>
+            {% if responses %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Respuesta</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for response in responses %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ response.answer }}</td>
+                        <td>{{ response.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No hay respuestas para esta encuesta.</p>
+            {% endif %}
+        </section>
+
+        <section>
+            <h3>Gráfico de Respuestas</h3>
+            {% if labels and data %}
+            <canvas id="responseChart" width="400" height="200"></canvas>
+            <script>
+                console.log("Labels:", {{ labels|tojson }});
+                console.log("Data:", {{ data|tojson }});
+
+                const labels = {{ labels|tojson }};
+                const data = {{ data|tojson }};
+                const ctx = document.getElementById('responseChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Frecuencia de Respuestas',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+            {% else %}
+            <p>No hay datos suficientes para generar el gráfico.</p>
+            {% endif %}
+        </section>
 
         <footer>
             <a href="/" class="btn-home">Volver a la Página Principal</a>
